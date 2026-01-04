@@ -18,3 +18,12 @@ def test_api_analyze(client):
     response = client.post('/analyze', json={"text": "radar"})
     assert response.status_code == 200
     assert response.get_json()["is_palindrome"] is True
+
+def test_count_vowels():
+    analyzer = TextAnalyzer()
+    # Caso 1: Texto con vocales variadas
+    assert analyzer.count_vowels("Murcielago") == 5
+    # Caso 2: Texto sin vocales
+    assert analyzer.count_vowels("Ply") == 0
+    # Caso 3: Mayúsculas y minúsculas
+    assert analyzer.count_vowels("AeIoU") == 5

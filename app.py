@@ -18,6 +18,8 @@ class TextAnalyzer:
             return False
         clean_text = re.sub(r'[^a-zA-Z0-9]', '', text).lower()
         return clean_text == clean_text[::-1] and len(clean_text) > 0
+    
+    
 
 # --- Rutas de la API (Cuadrante Q2 / API First) ---
 
