@@ -23,14 +23,8 @@ class TextAnalyzer:
     def count_vowels(text):
         if not text or not isinstance(text, str):
             return 0
-        
-        contador = 0
-        vocales = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
-        
-        for letra in text:
-            if letra in vocales:
-                contador = contador + 1
-        return contador
+        # Refactor: Usamos list comprehension para ser más concisos
+        return sum(1 for char in text if char.lower() in 'aeiou')
 
 # --- Rutas de la API (Cuadrante Q2 / API First) ---
 
