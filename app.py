@@ -19,7 +19,18 @@ class TextAnalyzer:
         clean_text = re.sub(r'[^a-zA-Z0-9]', '', text).lower()
         return clean_text == clean_text[::-1] and len(clean_text) > 0
     
-    
+    @staticmethod
+    def count_vowels(text):
+        if not text or not isinstance(text, str):
+            return 0
+        
+        contador = 0
+        vocales = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
+        
+        for letra in text:
+            if letra in vocales:
+                contador = contador + 1
+        return contador
 
 # --- Rutas de la API (Cuadrante Q2 / API First) ---
 
