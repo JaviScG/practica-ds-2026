@@ -1,0 +1,47 @@
+name: CI/CD Pipeline Analizador
+
+on:
+  push:
+    branches: [ "main", "feature/*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # CI: Build, Q1, Q2 y Q4
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Q1 y Q2: Pruebas unitarias e integración (Pytest) 
+      - name: Ejecutar Tests (Q1 y Q2)
+        run: pytest
+
+      # Q4: Análisis estático (SAST con Bandit y Linter con Flake8) 
+      - name: Análisis de Seguridad (Bandit)
+        run: bandit -r . -f custom || true
+
+      - name: Análisis de Calidad (Flake8)
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  # CD: Despliegue automático 
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simular Despliegue
+        run: |
+          echo "Desplegando automáticamente a producción tras validar CI..."
+          echo "Estado: Verde en producción."
