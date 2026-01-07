@@ -32,7 +32,7 @@ jobs:
   # 2. NUEVA ETAPA VISUAL: CALIDAD Y SEGURIDAD (Q4)
   quality-analysis:
     name: Q4 - Calidad y Seguridad
-    needs: build-and-test  # Se ejecuta después de que pasen los tests
+    needs: build-and-test  
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
@@ -50,7 +50,7 @@ jobs:
 
       # Q4: Análisis estático
       - name: Análisis de Seguridad (Bandit)
-        run: bandit -r . -f custom || true  # El || true evita que falle el pipeline si encuentra algo leve
+        run: bandit -r . -f custom || true  
 
       - name: Análisis de Calidad (Flake8)
         run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -58,7 +58,7 @@ jobs:
   # 3. ETAPA DE DESPLIEGUE (CD)
   deploy:
     name: Deploy to Production
-    needs: quality-analysis # Ahora depende de que pase la calidad, no solo los tests
+    needs: quality-analysis 
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
